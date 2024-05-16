@@ -13,6 +13,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -72,7 +73,7 @@ class UserResource extends Resource
                         ->color('success'),
                     Tables\Actions\DeleteAction::make(),
                 ]),
-            ])
+            ])->emptyStateActions([CreateAction::make()])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

@@ -14,6 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Table;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
@@ -33,8 +34,9 @@ class CategoryResource extends Resource
                                 ->required()
                                 ->maxLength(255)
                                 ->live(onBlur: true)
-                                ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                                ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
                             Forms\Components\TextInput::make('slug')
+                                ->helperText(new HtmlString('The <strong>Slug</strong> is auto generate base on name.'))
                                 ->dehydrated()
                                 ->required()
                                 ->maxLength(255)

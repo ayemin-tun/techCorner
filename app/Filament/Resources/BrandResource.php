@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BrandResource\Pages;
 use App\Models\Brand;
-use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
@@ -38,10 +37,11 @@ class BrandResource extends Resource
                                 ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
                             Forms\Components\TextInput::make('slug')
                                 ->helperText(new HtmlString('The <strong>Slug</strong> is auto generate base on name.'))
+                                ->disabled()
                                 ->dehydrated()
                                 ->required()
                                 ->maxLength(255)
-                                ->unique(Category::class, 'slug', ignoreRecord: true),
+                                ->unique(Brand::class, 'slug', ignoreRecord: true),
                         ]),
                     Forms\Components\FileUpload::make('image')
                         ->image()

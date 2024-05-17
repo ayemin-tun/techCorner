@@ -37,6 +37,7 @@ class CategoryResource extends Resource
                                 ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
                             Forms\Components\TextInput::make('slug')
                                 ->helperText(new HtmlString('The <strong>Slug</strong> is auto generate base on name.'))
+                                ->disabled()
                                 ->dehydrated()
                                 ->required()
                                 ->maxLength(255)

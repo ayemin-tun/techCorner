@@ -73,16 +73,16 @@ class ProductResource extends Resource
                     ]),
 
                     Section::make('Associations')->schema([
-                        Select::make('category_id')
-                            ->required()
-                            ->searchable()
-                            ->preload()
-                            ->relationship('category', 'name'),
                         Select::make('brand_id')
                             ->required()
                             ->searchable()
                             ->preload()
                             ->relationship('brand', 'name'),
+                        Select::make('category_id')
+                            ->required()
+                            ->searchable()
+                            ->preload()
+                            ->relationship('category', 'name'),
                     ]),
 
                     Section::make('Status')->schema([

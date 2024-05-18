@@ -19,7 +19,10 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Columns\SelectColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Number;
 
@@ -95,6 +98,7 @@ class OrderResource extends Resource
                     Section::make('Order Items')->schema([
                         Repeater::make('items')
                             ->relationship()
+                            ->required()
                             ->schema([
                                 Select::make('product_id')
                                     ->relationship('product', 'name')
@@ -152,7 +156,33 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('user.name')
+                    ->label('Customer')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('grand_total')
+                    ->numeric()
+                    ->sortable()
+                    ->money('USD'),
+                TextColumn::make('payment_method')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('payment_status')
+                    ->searchable()
+                    ->sortable(),
+                SelectColumn::make('status')
+                    ->options([
+                        'new' => 'New',
+                        'processing' => 'Processing',
+                        'shipped' => 'Shipped',
+                        'delivered' => 'Delivered',
+                        'cancelled' => 'Cancelled',
+                    ]),
+                TextColumn::make('created_at')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->emptyStateActions([
                 CreateAction::make(),
@@ -161,8 +191,13 @@ class OrderResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\ViewAction::make()
+                        ->color('info'),
+                    Tables\Actions\EditAction::make()
+                        ->color('success'),
+                    Tables\Actions\DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -186,5 +221,15 @@ class OrderResource extends Resource
             'view' => Pages\ViewOrder::route('/{record}'),
             'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeCOlor(): string|array|null
+    {
+        return static::getModel()::count() > 10 ? 'success' : 'danger';
     }
 }

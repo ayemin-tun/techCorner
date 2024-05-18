@@ -16,8 +16,7 @@ class Address extends Model
         'last_name',
         'phone',
         'city',
-        'state',
-        'zip_code',
+        'address',
     ];
 
     public function order(): BelongsTo

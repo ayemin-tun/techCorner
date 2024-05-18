@@ -29,6 +29,8 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
 
+    protected static ?string $navigationGroup = 'Product';
+
     // ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
     public static function form(Form $form): Form
     {

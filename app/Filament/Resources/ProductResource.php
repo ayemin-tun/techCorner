@@ -31,6 +31,8 @@ class ProductResource extends Resource
 
     protected static ?string $navigationGroup = 'Product';
 
+    protected static ?string $recordTitleAttribute = 'name';
+
     // ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
     public static function form(Form $form): Form
     {

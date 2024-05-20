@@ -29,7 +29,9 @@ class Category extends Component
     {
         $categories = ModelsCategory::where('is_active', 1)
             ->where('name', 'like', '%' . $this->search . '%')
-            ->paginate(10);
+            ->paginate(6);
+
+        // dd($categories);
 
         return view('livewire.category', ['categories' => $categories]);
     }

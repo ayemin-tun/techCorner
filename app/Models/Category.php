@@ -12,7 +12,7 @@ class Category extends Model
     use HandleImageDelete,HasFactory;
 
     protected $fillable = ['name', 'slug', 'image', 'is_active'];
-
+    
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);

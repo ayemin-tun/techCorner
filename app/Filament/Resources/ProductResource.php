@@ -21,6 +21,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 class ProductResource extends Resource
@@ -58,9 +59,10 @@ class ProductResource extends Resource
 
                     Section::make('Images')->schema([
                         FileUpload::make('images')
+                            ->helperText(new HtmlString('Maximinum 4 images'))
                             ->multiple()
                             ->directory('products')
-                            ->maxFiles(5)
+                            ->maxFiles(4)
                             ->reorderable(),
                     ]),
 

@@ -24,7 +24,7 @@
         <div class="grid grid-cols-2 gap-6 lg:grid-cols-4 md:grid-cols-2">
             @foreach ($brands as $brand )
             <div class="bg-white rounded-lg shadow-md dark:bg-gray-800" wire:key="{{$brand->id}}">
-                <a href="" class="">
+                <a href="/products?selected_brands[0]={{$brand->id}}" class="" wire:navigate>
                     <img src="{{url('storage',$brand->image)}}" alt="" class="object-cover w-full md:h-64 h-28 rounded-t-lg">
                 </a>
                 <div class="p-5 text-center">

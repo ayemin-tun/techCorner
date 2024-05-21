@@ -25,7 +25,7 @@ Route::get('/reset', ResetPassword::class);
 Route::get('/', HomePage::class);
 Route::get('/categories', Category::class);
 Route::get('/products', Product::class);
-Route::get('/products/{product}', ProductDetail::class);
+Route::get('/products/{slug}', ProductDetail::class);
 
 Route::get('/cart', Cart::class);
 Route::get('/checkout', Checkout::class);

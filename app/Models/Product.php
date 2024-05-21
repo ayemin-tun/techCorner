@@ -6,10 +6,11 @@ use App\Traits\HandleImagesDelete;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Livewire\WithPagination;
 
 class Product extends Model
 {
-    use HandleImagesDelete,HasFactory;
+    use HandleImagesDelete, HasFactory;
 
     protected $fillable = [
         'category_id',

@@ -47,7 +47,9 @@
 
                             </div>
                             <p class="max-w-md text-gray-700 dark:text-gray-400">
+                                @if($product->description)
                                 {!! Str::markdown($product->description) !!}
+                                @endif
                             </p>
                         </div>
                         <div class="w-32 mb-8 ">

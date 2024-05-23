@@ -32,14 +32,14 @@ class ProductDetail extends Component
 
     public function addToCart($product_id)
     {
-        $total_cont = CartManagement::addItemToCart($product_id);
+        $total_cont = CartManagement::addItemToCartWithQty($product_id, $this->quantity);
         $this->dispatch('update-cart-count', total_count: $total_cont)->to(Navbar::class);
-
         $this->alert('success', 'Product added to the cart successfully!', [
             'position' => 'bottom-end',
             'timer' => 3000,
             'toast' => true,
         ]);
+        $this->quantity = 1;
     }
 
 

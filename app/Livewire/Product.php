@@ -2,9 +2,12 @@
 
 namespace App\Livewire;
 
+use App\Helpers\CartManagement;
+use App\Livewire\Partials\Navbar;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product as ModelsProduct;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -12,7 +15,7 @@ use Livewire\WithPagination;
 
 class Product extends Component
 {
-    use WithPagination;
+    use WithPagination, LivewireAlert;
     #[Url]
     public $selected_categories = [];
     #[Url]
@@ -42,6 +45,20 @@ class Product extends Component
         $this->search = '';
         $this->resetPage();
     }
+
+    // add product to cart
+    public function addToCart($product_id)
+    {
+        $total_cont = CartManagement::addItemToCart($product_id);
+        $this->dispatch('update-cart-count', total_count: $total_cont)->to(Navbar::class);
+
+        $this->alert('success', 'Product added to the cart successfully!', [
+            'position' => 'bottom-end',
+            'timer' => 3000,
+            'toast' => true,
+        ]);
+    }
+
     #[Title('TechCorner | Products')]
     public function render()
     {

@@ -11,10 +11,12 @@ use App\Livewire\Checkout;
 use App\Livewire\HomePage;
 use App\Livewire\MyOrders;
 use App\Livewire\MyOrdersDetail;
+use App\Livewire\Partials\Navbar;
 use App\Livewire\Product;
 use App\Livewire\ProductDetail;
 use App\Livewire\Success;
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
 
 // auth
 Route::get('/login', Login::class);
@@ -34,3 +36,5 @@ Route::get('/my-orders/{order}', MyOrdersDetail::class);
 
 Route::get('/success', Success::class);
 Route::get('/cancel', Cancel::class);
+
+

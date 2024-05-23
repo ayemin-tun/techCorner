@@ -27,6 +27,9 @@ class Product extends Component
     #[Url]
     public $price_range = 5000;
 
+    #[Url]
+    public $sort = 'latest';
+
     public $search = "";
 
     public function updatingSearch()
@@ -60,6 +63,12 @@ class Product extends Component
         }
         if ($this->search) {
             $products->where('name', 'like', '%' . $this->search . '%');
+        }
+        if ($this->sort === 'latest') {
+            $products->latest();
+        }
+        if ($this->sort === 'price') {
+            $products->orderBy('price');
         }
 
         return view('livewire.product', [

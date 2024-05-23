@@ -25,8 +25,15 @@
             </div>
 
         </div>
+
         @if ($categories->count()>0)
-        <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">
+
+        <div wire:loading.flex class="w-full flex flex-wrap items-center">
+            @include('livewire.components.categories.skeleton-loader')
+        </div>
+
+
+        <div wire:loading.remove class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">
             @foreach ($categories as $category)
             <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition dark:bg-slate-900 dark:border-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="/products?selected_categories[0]={{$category->id}}" wire:key={{$category->id}} wire:navigate>
                 <div class="p-4 md:p-5">
@@ -53,7 +60,7 @@
         @endif
 
         @if ($categories->count()===0) <div class="w-full p-3 mt-4">
-            <h1 class="text-center text-lg font-semibold">No Categories</h1>
+            <h1 class="text-center font-bold text-xl text-gray-600">No Categories</h1>
         </div>
         @endif
 

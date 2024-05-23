@@ -25,7 +25,7 @@ class Product extends Component
     public $on_sale;
 
     #[Url]
-    public $price_range = 1000;
+    public $price_range = 5000;
 
     public $search = "";
 

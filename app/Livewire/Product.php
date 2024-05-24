@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Helpers\Alert;
 use App\Helpers\CartManagement;
 use App\Livewire\Partials\Navbar;
 use App\Models\Brand;
@@ -51,12 +52,7 @@ class Product extends Component
     {
         $total_cont = CartManagement::addItemToCart($product_id);
         $this->dispatch('update-cart-count', total_count: $total_cont)->to(Navbar::class);
-
-        $this->alert('success', 'Product added to the cart successfully!', [
-            'position' => 'bottom-end',
-            'timer' => 3000,
-            'toast' => true,
-        ]);
+        Alert::message('success', 'Product added to the cart successfully', $this);
     }
 
     #[Title('TechCorner | Products')]

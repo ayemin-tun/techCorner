@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Helpers\Alert;
 use App\Helpers\CartManagement;
 use App\Livewire\Partials\Navbar;
 use App\Models\Product;
@@ -34,11 +35,7 @@ class ProductDetail extends Component
     {
         $total_cont = CartManagement::addItemToCartWithQty($product_id, $this->quantity);
         $this->dispatch('update-cart-count', total_count: $total_cont)->to(Navbar::class);
-        $this->alert('success', 'Product added to the cart successfully!', [
-            'position' => 'bottom-end',
-            'timer' => 3000,
-            'toast' => true,
-        ]);
+        Alert::message('success', 'Product added to the cart successfully', $this);
         $this->quantity = 1;
     }
 

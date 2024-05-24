@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Helpers\Alert;
 use App\Helpers\CartManagement;
 use App\Livewire\Partials\Navbar;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -24,11 +25,7 @@ class Cart extends Component
         $this->cart_items = CartManagement::removeCartItem($product_id);
         $this->grand_total = CartManagement::calculateGrandTotal($this->cart_items);
         $this->dispatch('update-cart-count', total_count: count($this->cart_items))->to(Navbar::class);
-        $this->alert('success', 'Product removed from the cart successfully!', [
-            'position' => 'bottom-end',
-            'timer' => 3000,
-            'toast' => true,
-        ]);
+        Alert::message('success', 'Product removed from the cart!', $this);
     }
 
     public function increaseQty($product_id)
@@ -41,6 +38,9 @@ class Cart extends Component
     {
         $this->cart_items = CartManagement::decrementQuantityToCartItem($product_id);
         $this->grand_total = CartManagement::calculateGrandTotal($this->cart_items);
+        if (count($this->cart_items) === 0) {
+            Alert::message('success', 'Product removed from the cart', $this);
+        }
         $this->dispatch('update-cart-count', total_count: count($this->cart_items))->to(Navbar::class);
     }
 

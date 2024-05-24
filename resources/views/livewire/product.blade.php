@@ -1,16 +1,18 @@
-<div class="w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto">
-    <section class="py-10 bg-gray-50 font-poppins dark:bg-gray-800 rounded-lg">
+<div class="w-full max-w-[85rem] py-5 px-4 sm:px-6 lg:px-8 mx-auto">
+    <section class="py-5 bg-gray-50 font-poppins dark:bg-gray-800 rounded-lg">
         <div class="px-4 py-4 mx-auto max-w-7xl lg:py-6 md:px-6">
             <div class="flex flex-wrap mb-24 -mx-3">
                 <div class="w-full pr-2 lg:w-1/4 lg:block">
 
-                    @include('livewire.components.products.category-filter')
+                    @include('livewire.components.products.filter-button')
 
-                    @include('livewire.components.products.brand-filter')
-
-                    @include('livewire.components.products.product-status-filter')
-
-                    @include('livewire.components.products.price-filter')
+                    <!-- Regular filters for desktop view -->
+                    <div class="hidden lg:block">
+                        @include('livewire.components.products.category-filter')
+                        @include('livewire.components.products.brand-filter')
+                        @include('livewire.components.products.product-status-filter')
+                        @include('livewire.components.products.price-filter')
+                    </div>
 
                 </div>
                 <div class="w-full px-3 lg:w-3/4">

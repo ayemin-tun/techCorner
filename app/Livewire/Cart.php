@@ -38,9 +38,6 @@ class Cart extends Component
     {
         $this->cart_items = CartManagement::decrementQuantityToCartItem($product_id);
         $this->grand_total = CartManagement::calculateGrandTotal($this->cart_items);
-        if (count($this->cart_items) === 0) {
-            Alert::message('success', 'Product removed from the cart', $this);
-        }
         $this->dispatch('update-cart-count', total_count: count($this->cart_items))->to(Navbar::class);
     }
 

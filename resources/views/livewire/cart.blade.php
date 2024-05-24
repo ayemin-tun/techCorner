@@ -8,8 +8,8 @@
                         <thead>
                             <tr>
                                 <th class="text-left font-semibold">Product</th>
-                                <th class="text-left font-semibold">Price</th>
                                 <th class="text-left font-semibold">Quantity</th>
+                                <th class="text-left font-semibold">Price</th>
                                 <th class="text-left font-semibold">Total</th>
                                 <th class="text-left font-semibold"></th>
                             </tr>
@@ -24,14 +24,14 @@
                                     </div>
                                 </td>
                                 <td class="py-4">
-                                    {{Number::currency($item['unit_amount'],'USD')}}
-                                </td>
-                                <td class="py-4">
                                     <div class="flex items-center">
                                         <button class="border rounded-md py-2 px-4 mr-2 hover:bg-blue-600 hover:text-white duration-200 transition-colors" wire:click='decreaseQty({{$item['product_id']}})'>-</button>
                                         <span class="text-center w-8">{{$item['quantity']}}</span>
                                         <button class="border rounded-md py-2 px-4 mr-2 hover:bg-blue-600 hover:text-white duration-200 transition-colors" wire:click='increaseQty({{$item['product_id']}})'>+</button>
                                     </div>
+                                </td>
+                                <td class="py-4">
+                                    {{Number::currency($item['unit_amount'],'USD')}}
                                 </td>
                                 <td class="py-4">
                                     {{Number::currency($item['total_amount'],'USD')}}

@@ -169,6 +169,13 @@ class OrderResource extends Resource
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('payment_status')
+                    ->badge()
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'paid' => 'success',
+                        'failed' => 'danger',
+                    })
                     ->searchable()
                     ->sortable(),
                 SelectColumn::make('status')

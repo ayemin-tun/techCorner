@@ -9,38 +9,57 @@
                         <div class="flex items-center justify-center w-full pb-6 space-x-4 md:justify-start">
                             <div class="flex flex-col items-start justify-start space-y-2">
                                 <p class="text-lg font-semibold leading-4 text-left text-gray-800 dark:text-gray-400">
-                                    Cielo Schimmel</p>
-                                <p class="text-sm leading-4 text-gray-600 dark:text-gray-400">71582 Schmitt Springs</p>
-                                <p class="text-sm leading-4 text-gray-600 dark:text-gray-400">Castro Valley, Delaware, 53476-0454</p>
-                                <p class="text-sm leading-4 cursor-pointer dark:text-gray-400">Phone: 587-019-6103</p>
+                                    {{$order->address->full_name}}
+                                </p>
+                                <p class="text-sm leading-4 text-gray-600 dark:text-gray-400">
+                                    {{$order->address->address}}
+                                </p>
+                                <p class="text-sm leading-4 text-gray-600 dark:text-gray-400">{{$order->address->city}}</p>
+                                <p class="text-sm leading-4 cursor-pointer dark:text-gray-400">Phone: {{$order->address->phone}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="flex flex-wrap items-center pb-4 mb-10 border-b border-gray-200 dark:border-gray-700">
-                    <div class="w-full px-4 mb-4 md:w-1/4">
+                    <div class="w-full px-4 mb-4 md:w-1/5">
                         <p class="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
                             Order Number: </p>
                         <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
-                            29</p>
+                            {{$order->id}}
+                        </p>
                     </div>
-                    <div class="w-full px-4 mb-4 md:w-1/4">
+                    <div class="w-full px-4 mb-4 md:w-1/5">
                         <p class="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
                             Date: </p>
                         <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">
-                            17-02-2024</p>
+                            {{$order->created_at->format('d-m-Y')}}
+                        </p>
                     </div>
-                    <div class="w-full px-4 mb-4 md:w-1/4">
+                    <div class="w-full px-4 mb-4 md:w-1/5">
                         <p class="mb-2 text-sm font-medium leading-5 text-gray-800 dark:text-gray-400 ">
                             Total: </p>
                         <p class="text-base font-semibold leading-4 text-blue-600 dark:text-gray-400">
-                            ₹157,495.00</p>
+                            {{Number::currency($order->grand_total,'USD')}}
+                        </p>
                     </div>
-                    <div class="w-full px-4 mb-4 md:w-1/4">
+                    <div class="w-full px-4 mb-4 md:w-1/5">
                         <p class="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
                             Payment Method: </p>
                         <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400 ">
-                            Cash on Delivery </p>
+                            {{$order->payment_method ==='cod'?'Cash on Delievery':"Card"}}
+                        </p>
+                    </div>
+                    <div class="w-full px-4 mb-4 md:w-1/5">
+                        <p class="mb-2 text-sm leading-5 text-gray-600 dark:text-gray-400 ">
+                            Payment Status: </p>
+                        <p class="text-base font-semibold leading-4 
+                            @if($order->payment_status === 'pending') text-yellow-600 dark:text-yellow-400
+                            @elseif($order->payment_status === 'paid') text-green-600 dark:text-green-400
+                            @elseif($order->payment_status === 'failed') text-red-600 dark:text-red-400
+                            @else text-gray-800 dark:text-gray-400
+                            @endif">
+                            {{$order->payment_status}}
+                        </p>
                     </div>
                 </div>
                 <div class="px-4 mb-10">
@@ -50,21 +69,23 @@
                             <div class="flex flex-col items-center justify-center w-full pb-4 space-y-4 border-b border-gray-200 dark:border-gray-700">
                                 <div class="flex justify-between w-full">
                                     <p class="text-base leading-4 text-gray-800 dark:text-gray-400">Subtotal</p>
-                                    <p class="text-base leading-4 text-gray-600 dark:text-gray-400">₹157,495.00</p>
+                                    <p class="text-base leading-4 text-gray-600 dark:text-gray-400">{{Number::currency($order->grand_total,'USD')}}</p>
                                 </div>
                                 <div class="flex items-center justify-between w-full">
                                     <p class="text-base leading-4 text-gray-800 dark:text-gray-400">Discount
                                     </p>
-                                    <p class="text-base leading-4 text-gray-600 dark:text-gray-400">00</p>
+                                    <p class="text-base leading-4 text-gray-600 dark:text-gray-400">{{Number::currency(0,'USD')}}</p>
                                 </div>
                                 <div class="flex items-center justify-between w-full">
                                     <p class="text-base leading-4 text-gray-800 dark:text-gray-400">Shipping</p>
-                                    <p class="text-base leading-4 text-gray-600 dark:text-gray-400">00</p>
+                                    <p class="text-base leading-4 text-gray-600 dark:text-gray-400">
+                                        {{Number::currency(0,'USD')}}
+                                    </p>
                                 </div>
                             </div>
                             <div class="flex items-center justify-between w-full">
                                 <p class="text-base font-semibold leading-4 text-gray-800 dark:text-gray-400">Total</p>
-                                <p class="text-base font-semibold leading-4 text-gray-600 dark:text-gray-400">₹157,495.00</p>
+                                <p class="text-base font-semibold leading-4 text-gray-600 dark:text-gray-400">{{Number::currency($order->grand_total,'USD')}}</p>
                             </div>
                         </div>
                         <div class="flex flex-col w-full px-2 space-y-4 md:px-8 ">
@@ -79,11 +100,12 @@
                                     </div>
                                     <div class="flex flex-col items-center justify-start">
                                         <p class="text-lg font-semibold leading-6 text-gray-800 dark:text-gray-400">
-                                            Delivery<br><span class="text-sm font-normal">Delivery with 24 Hours</span>
+                                            Delivery<br>
+                                            <!-- <span class="text-sm font-normal">Delivery with 24 Hours</span> -->
                                         </p>
                                     </div>
                                 </div>
-                                <p class="text-lg font-semibold leading-6 text-gray-800 dark:text-gray-400">00</p>
+                                <p class="text-lg font-semibold leading-6 text-gray-800 dark:text-gray-400">{{Number::currency(0,'USD')}}</p>
                             </div>
                         </div>
                     </div>
@@ -92,9 +114,17 @@
                     <a href="/products" class="w-full text-center px-4 py-2 text-blue-500 border border-blue-500 rounded-md md:w-auto hover:text-white hover:bg-blue-600 dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-300">
                         Go back shopping
                     </a>
-                    <a href="/orders" class="w-full text-center px-4 py-2 bg-blue-500 rounded-md text-gray-50 md:w-auto dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-gray-700 dark:bg-gray-800">
+                    <a href="/my-orders" class="w-full text-center px-4 py-2 bg-blue-500 rounded-md text-gray-50 md:w-auto dark:text-gray-300 hover:bg-blue-600 dark:hover:bg-gray-700 dark:bg-gray-800">
                         View My Orders
                     </a>
+                    <!-- <button wire:click="printOrderDetails" class="w-full text-center px-4 py-2 bg-green-500 rounded-md text-gray-50 md:w-auto dark:text-gray-300 hover:bg-green-600 dark:hover:bg-gray-700 dark:bg-gray-800 flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m9 13.5 3 3m0 0 3-3m-3 3v-6m1.06-4.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                        </svg>
+                        <span wire:loading>Processing ...</span>
+                        <span wire:loading.remove>Save</span>
+                        
+                    </button> -->
                 </div>
             </div>
         </div>

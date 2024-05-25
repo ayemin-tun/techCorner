@@ -2,9 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Helpers\Alert;
 use App\Helpers\CartManagement;
+use App\Mail\OrderPlaced;
 use App\Models\Address;
 use App\Models\Order;
+use Illuminate\Support\Facades\Mail;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Stripe\Checkout\Session;
@@ -13,6 +17,8 @@ use Stripe\Stripe;
 #[Title('Techcorner | Checkout')]
 class Checkout extends Component
 {
+    use LivewireAlert;
+
     public $first_name;
     public $last_name;
     public $phone;
@@ -39,6 +45,26 @@ class Checkout extends Component
             'payment_method' => 'required',
         ]);
         $cart_items = CartManagement::getCartItemFormCookie();
+        $line_items = $this->prepareLineItems($cart_items);
+
+        $order = $this->prepareOrderData($cart_items);
+        $address = $this->prepareAddressData();
+
+        $redirect_url = $this->handlePayment($line_items);
+
+        $order->save();
+        $address->order_id = $order->id;
+        $address->save();
+
+        $order->items()->createMany($cart_items);
+        CartManagement::clearCartItems();
+        Mail::to(request()->user())->send(new OrderPlaced($order));
+        Alert::message('success', "Your order is proceeded.Please check your email", $this);
+        return redirect($redirect_url);
+    }
+
+    protected function prepareLineItems($cart_items)
+    {
         $line_items = [];
         foreach ($cart_items as $item) {
             $line_items[] = [
@@ -52,6 +78,11 @@ class Checkout extends Component
                 'quantity' => $item['quantity'],
             ];
         }
+        return $line_items;
+    }
+
+    protected function prepareOrderData($cart_items)
+    {
         $order = new Order();
         $order->user_id = auth()->user()->id;
         $order->grand_total = CartManagement::calculateGrandTotal($cart_items);
@@ -63,12 +94,23 @@ class Checkout extends Component
         $order->shipping_method = 'none';
         $order->notes = "Order placed by " . auth()->user()->name;
 
+        return $order;
+    }
+
+    protected function prepareAddressData()
+    {
         $address = new Address();
         $address->first_name = $this->first_name;
         $address->last_name = $this->last_name;
         $address->phone = $this->phone;
         $address->address = $this->address;
         $address->city = $this->city;
+
+        return $address;
+    }
+
+    protected function handlePayment($line_items)
+    {
         $redirect_url = '';
         if ($this->payment_method == 'stripe') {
             Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -84,14 +126,10 @@ class Checkout extends Component
         } else {
             $redirect_url = route('success');
         }
-        $order->save();
-        $address->order_id = $order->id;
-        $address->save();
 
-        $order->items()->createMany($cart_items);
-        CartManagement::clearCartItems();
-        return redirect($redirect_url);
+        return $redirect_url;
     }
+
     public function render()
     {
         $cart_items = CartManagement::getCartItemFormCookie();

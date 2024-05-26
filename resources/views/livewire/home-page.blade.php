@@ -2,8 +2,8 @@
     <!-- Hero Section -->
     @include('livewire.components.home.hero')
 
-    <!-- Brand Section -->
-    @include('livewire.components.home.brands')
+    <!-- Latest Products Section -->
+    @include('livewire.components.home.latest-products')
 
     <!-- Category Section  -->
     @include('livewire.components.home.categories')

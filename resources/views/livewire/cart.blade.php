@@ -24,7 +24,7 @@
                                     </div>
                                 </td>
                                 <td class="py-4">
-                                    <div class="flex items-center">
+                                    <div class="flex items-center flex-wrap">
                                         <button class="border rounded-md py-2 px-4 mr-2 hover:bg-blue-600 hover:text-white duration-200 transition-colors" wire:click='decreaseQty({{$item['product_id']}})'>-</button>
                                         <span class="text-center w-8">{{$item['quantity']}}</span>
                                         <button class="border rounded-md py-2 px-4 mr-2 hover:bg-blue-600 hover:text-white duration-200 transition-colors" wire:click='increaseQty({{$item['product_id']}})'>+</button>

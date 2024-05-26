@@ -2,8 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Helpers\Alert;
 use App\Models\Order;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -13,6 +15,8 @@ use Stripe\Stripe;
 #[Title('TechCorner | Success')]
 class Success extends Component
 {
+    use LivewireAlert;
+
     #[Url]
     public $session_id;
 
@@ -42,13 +46,17 @@ class Success extends Component
 
     public function printOrderDetails()
     {
+
+        $name = auth()->user()->name;
         // Load the view for the order details
+        Pdf::setOption(['dpi' => 150, 'defaultFont' => 'Noto Sans Myanmar']);
         $pdf = Pdf::loadView('pdf.order-details', ['order' => $this->order]);
+        Alert::message('success', 'Your Download is completed', $this);
 
         // Return the PDF download response
         return response()->streamDownload(
             fn () => print ($pdf->output()),
-            "order-details-{$this->order->id}.pdf"
+            "order-details-[{$this->order->id}_{$name}].pdf"
         );
     }
 

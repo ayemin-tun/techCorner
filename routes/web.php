@@ -11,14 +11,11 @@ use App\Livewire\Checkout;
 use App\Livewire\HomePage;
 use App\Livewire\MyOrders;
 use App\Livewire\MyOrdersDetail;
-use App\Livewire\Partials\Navbar;
 use App\Livewire\Product;
 use App\Livewire\ProductDetail;
 use App\Livewire\Success;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
-use Livewire\Livewire;
-
-
 
 Route::get('/', HomePage::class);
 Route::get('/categories', Category::class);
@@ -44,6 +41,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/logout', function () {
         auth()->logout();
+
         return redirect()->to('/');
     });
+});
+
+Route::get('/test', function () {
+    $order = Order::with('address')->where('user_id', auth()->user()->id)->first();
+
+    return redirect()->route('pdf.order-details', ['order' => $order]);
 });

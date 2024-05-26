@@ -7,7 +7,7 @@
     <title>Order Details</title>
     <style>
         body {
-            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-family: 'Noto Sans Myanmar';
             font-style: normal;
         }
 

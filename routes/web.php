@@ -14,7 +14,6 @@ use App\Livewire\MyOrdersDetail;
 use App\Livewire\Product;
 use App\Livewire\ProductDetail;
 use App\Livewire\Success;
-use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomePage::class);
@@ -34,7 +33,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/checkout', Checkout::class);
     Route::get('/my-orders', MyOrders::class);
-    Route::get('/my-orders/{order}', MyOrdersDetail::class)->name('my-orders.show');
+    Route::get('/my-orders/{order_id}', MyOrdersDetail::class)->name('my-orders.show');
 
     Route::get('/success', Success::class)->name('success');
     Route::get('/cancel', Cancel::class)->name('cancel');
@@ -44,10 +43,4 @@ Route::middleware('auth')->group(function () {
 
         return redirect()->to('/');
     });
-});
-
-Route::get('/test', function () {
-    $order = Order::with('address')->where('user_id', auth()->user()->id)->first();
-
-    return redirect()->route('pdf.order-details', ['order' => $order]);
 });

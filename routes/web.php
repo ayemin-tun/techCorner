@@ -9,6 +9,7 @@ use App\Livewire\Cart;
 use App\Livewire\Category;
 use App\Livewire\Checkout;
 use App\Livewire\HomePage;
+use App\Livewire\MyAccount;
 use App\Livewire\MyOrders;
 use App\Livewire\MyOrdersDetail;
 use App\Livewire\Product;
@@ -34,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout', Checkout::class);
     Route::get('/my-orders', MyOrders::class);
     Route::get('/my-orders/{order_id}', MyOrdersDetail::class)->name('my-orders.show');
-
+    Route::get('/my-account', MyAccount::class);
     Route::get('/success', Success::class)->name('success');
     Route::get('/cancel', Cancel::class)->name('cancel');
 

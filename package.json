@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "npm run production" 
     },
     "devDependencies": {
         "autoprefixer": "^10.4.19",

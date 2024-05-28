@@ -15,5 +15,8 @@
     },
     "dependencies": {
         "preline": "^2.1.0"
-    }
+    }, 
+    "engines": {
+        "node": "18.x"
+      }
 }

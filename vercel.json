@@ -11,8 +11,9 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
-        "APP_URL": "https://yourproductionurl.com",
- 
+        "APP_URL": "https://tech-corner-drab.vercel.app",
+        "APP_KEY": "base64:cVDtO4CdqBaS/XwbZJm8PahPXNk0ZXa0GveKDtg22i8=",
+
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",

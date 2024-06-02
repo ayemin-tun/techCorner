@@ -14,6 +14,8 @@ use App\Livewire\MyOrders;
 use App\Livewire\MyOrdersDetail;
 use App\Livewire\Product;
 use App\Livewire\ProductDetail;
+use App\Livewire\Review;
+use App\Livewire\ReviewCreate;
 use App\Livewire\Success;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +24,7 @@ Route::get('/categories', Category::class);
 Route::get('/products', Product::class);
 Route::get('/products/{slug}', ProductDetail::class);
 Route::get('/cart', Cart::class);
+Route::get('/review', Review::class);
 
 Route::middleware('guest')->group(function () {
     // auth
@@ -39,9 +42,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/success', Success::class)->name('success');
     Route::get('/cancel', Cancel::class)->name('cancel');
 
+    Route::get('/review/create', ReviewCreate::class);
+
     Route::get('/logout', function () {
         auth()->logout();
-
         return redirect()->to('/');
     });
 });

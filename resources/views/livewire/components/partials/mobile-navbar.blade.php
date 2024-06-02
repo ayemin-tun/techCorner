@@ -2,6 +2,7 @@
     <a wire:navigate class="font-medium {{request()->is('/')?'text-white':'text-gray-300'}} py-3 dark:text-blue-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="/" aria-current="page">Home</a>
     <a wire:navigate class="font-medium {{request()->is('categories')?'text-white':'text-gray-300'}} hover:text-gray-400 py-3 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="/categories">Categories</a>
     <a wire:navigate class="font-medium {{request()->is('products')?'text-white':'text-gray-300'}} hover:text-gray-400 py-3 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="/products">Products</a>
+    <a wire:navigate class="font-medium {{request()->is('review')?'text-white':'text-gray-300'}} hover:text-gray-400 py-3 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="/review">Review</a>
 
     <a wire:navigate class="font-medium flex items-center {{request()->is('cart')?'text-white':'text-gray-300'}} hover:text-gray-400 py-3 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="/cart">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="flex-shrink-0 w-5 h-5 mr-1">

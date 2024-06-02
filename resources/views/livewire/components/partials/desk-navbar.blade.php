@@ -7,8 +7,13 @@
             Categories
         </a>
 
+
         <a wire:navigate class="font-medium {{request()->is('products')?'text-white':'text-gray-300'}} hover:text-gray-400 py-3 md:py-6 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="/products">
             Products
+        </a>
+
+        <a wire:navigate class="font-medium {{request()->is('review')?'text-white':'text-gray-300'}} hover:text-gray-400 py-3 md:py-6 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="/review">
+            Reviews
         </a>
 
         <a wire:navigate class="font-medium flex items-center {{request()->is('cart')?'text-white':'text-gray-300'}} hover:text-gray-400 py-3 md:py-6 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="/cart">

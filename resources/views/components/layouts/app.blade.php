@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="icon" href="https://cdn.icon-icons.com/icons2/2551/PNG/512/cube_transparent_icon_152876.png" type="image/x-icon">
     <title>{{ $title ?? 'Tech Corner' }}</title>
     @vite(['resources/css/app.css','resources/js/app.js'])
     @livewireStyles

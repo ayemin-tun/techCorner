@@ -1,7 +1,7 @@
 <div class="w-full min-h-screen">
     <h1 class="text-lg font-bold md:mx-16 mx-6 my-7">Your Review</h1>
 
-    <!-- @if($authUser_review)
+    @if($authUser_review)
         <div class="grid md:grid-cols-2 grid-cols-1 md:px-16 px-6 gap-2">
             <livewire:review.review-card :review="$authUser_review" />
         </div>
@@ -11,7 +11,7 @@
                 <a class="px-3 py-1 bg-blue-600 text-white mx-3 rounded-md hover:bg-blue-700 transition-all duration-150 cursor-pointer" wire:navigate href="/review/create">Create</a>
             </h3>
         </div>
-    @endif -->
+    @endif 
 
     <div class="flex justify-center">
         <hr class="w-[80%] text-gray-500 font-extrabold">

@@ -3,6 +3,7 @@
 namespace App\Livewire\Review;
 
 use App\Helpers\Alert;
+use App\Livewire\HomePage;
 use App\Livewire\Review as LivewireReview;
 use App\Models\Review;
 use App\Models\User;
@@ -27,6 +28,7 @@ class ReviewCard extends Component
             $review->delete();
             Alert::message('success', 'Review Successfully deleted', $this);
             $this->dispatch('update_review')->to(LivewireReview::class);
+            $this->dispatch('update_review')->to(HomePage::class);
         } else {
             Alert::message('error', 'some thing want wrong', $this);
         }

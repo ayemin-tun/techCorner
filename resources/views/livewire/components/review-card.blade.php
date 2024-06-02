@@ -30,7 +30,6 @@
     </p>
     @else
     <p class="px-6 mb-6 text-base text-gray-500 dark:text-gray-400">
-        this is less than 150
         {{$review->review}}
     </p>
     @endif

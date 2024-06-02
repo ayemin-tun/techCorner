@@ -12,7 +12,7 @@ class Review extends Model
 
     protected $fillable = ['user_id', 'rating', 'review'];
 
-    public function users(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

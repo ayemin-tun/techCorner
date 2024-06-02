@@ -16,6 +16,7 @@ use App\Livewire\Product;
 use App\Livewire\ProductDetail;
 use App\Livewire\Review;
 use App\Livewire\ReviewCreate;
+use App\Livewire\ReviewEdit;
 use App\Livewire\Success;
 use Illuminate\Support\Facades\Route;
 
@@ -43,9 +44,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/cancel', Cancel::class)->name('cancel');
 
     Route::get('/review/create', ReviewCreate::class);
-
+    Route::get('/review/edit/{review_id}', ReviewEdit::class);
     Route::get('/logout', function () {
         auth()->logout();
+
         return redirect()->to('/');
     });
 });

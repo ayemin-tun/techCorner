@@ -8,6 +8,7 @@
         "php": "^8.2",
         "barryvdh/laravel-dompdf": "^2.2",
         "filament/filament": "^3.2",
+        "ibrahimbougaoua/filament-rating-star": "^1.0",
         "jantinnerezo/livewire-alert": "^3.0",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",

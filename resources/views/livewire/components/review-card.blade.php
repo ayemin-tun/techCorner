@@ -1,4 +1,9 @@
 <div class="py-6 bg-white rounded-md shadow dark:bg-gray-900 relative">
+@if($review->user_id === auth()->id())
+    <div class="absolute right-0 -top-1 transform bg-orange-600 text-white px-2 py-1 text-sm" style="transform-origin: top right;">
+        Your Review
+    </div>
+    @endif
     <div class="flex flex-wrap items-center justify-between pb-4 mb-6 space-x-2 border-b dark:border-gray-700">
         <div class="flex items-center px-6 mb-2 md:mb-0 ">
             <div class="flex mr-2 rounded-full">
@@ -20,8 +25,8 @@
     @if(strlen($review->review)>150)
     <p class="px-6 mb-6 text-base text-gray-500 dark:text-gray-400" x-data="{ showFullReview: false }">
         <span x-show="showFullReview">
-         {{$review->review}}
-         <span class="cursor-pointer text-blue-500" @click="showFullReview = false"> See less</span>
+            {{$review->review}}
+            <span class="cursor-pointer text-blue-500" @click="showFullReview = false"> See less</span>
         </span>
         <span x-show="!showFullReview">
             <span x-text="`{{ substr($review->review, 0, 150) }}`"></span>

@@ -39,7 +39,7 @@ class OrderResource extends Resource
             ->schema([
                 Group::make()->schema([
                     Section::make('Order Information')->schema([
-                        Select::make('user_id')
+                        Select::make('customer_id')
                             ->label('Customer')
                             ->required()
                             ->searchable()
@@ -157,7 +157,7 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('user.name')
+                TextColumn::make('userName')
                     ->label('Customer')
                     ->sortable()
                     ->searchable(),

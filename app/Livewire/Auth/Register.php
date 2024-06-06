@@ -3,7 +3,8 @@
 namespace App\Livewire\Auth;
 
 use App\Helpers\Alert;
-use App\Models\User;
+use App\Models\Customer;
+use Illuminate\Support\Facades\Hash;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -12,8 +13,11 @@ use Livewire\Component;
 class Register extends Component
 {
     use LivewireAlert;
+
     public $name;
+
     public $email;
+
     public $password;
 
     public function save()
@@ -21,18 +25,20 @@ class Register extends Component
         $this->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users|max:225',
-            'password' => 'required|min:6|max:225'
+            'password' => 'required|min:6|max:225',
         ]);
 
-        $user = User::create([
+        $user = Customer::create([
             'name' => $this->name,
             'email' => $this->email,
-            'password' => $this->password
+            'password' => Hash::make($this->password),
         ]);
         auth()->login($user);
         Alert::message('success', 'Registered Success', $this);
+
         return redirect()->intended();
     }
+
     public function render()
     {
         return view('livewire.auth.register');

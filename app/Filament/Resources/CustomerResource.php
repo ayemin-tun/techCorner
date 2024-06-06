@@ -2,33 +2,28 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers\OrdersRelationManager;
-use App\Models\User;
+use App\Models\Customer;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Pages\Page;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Hash;
 
-class UserResource extends Resource
+class CustomerResource extends Resource
 {
-    protected static ?string $model = User::class;
+    protected static ?string $model = Customer::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    protected static ?string $navigationGroup = 'Users';
-
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $navigationGroup = 'Customer';
 
     public static function form(Form $form): Form
     {
@@ -42,43 +37,25 @@ class UserResource extends Resource
                         ->maxLength(224)
                         ->unique(ignoreRecord: true)
                         ->required(),
-                    Select::make('role_id')
-                        ->relationship(
-                            name: 'roles',
-                            titleAttribute: 'name',
-                            modifyQueryUsing: function (Builder $query) {
-                                return $query->where('name', '!=', 'Customer');
-                            }
-                        )
-                        ->optionsLimit(5)
-                        ->preload()
-                        ->required(),
                     DateTimePicker::make('email_verified_at')
                         ->label('Email Verified At')
                         ->default(now()),
                     TextInput::make('password')
                         ->password()
+                        ->minLength(8)
+                        ->dehydrateStateUsing(fn ($state) => Hash::make($state))
                         ->dehydrated(fn ($state) => filled($state))
-                        ->required(fn (Page $livewire): bool => $livewire instanceof CreateRecord),
+                        ->nullable(),
                 ])->columns(2),
             ]);
     }
 
     public static function table(Table $table): Table
     {
-        $userQuery = User::withoutCustomerRoleandNoRole();
-
         return $table
-            ->query($userQuery)
             ->columns([
                 TextColumn::make('name')->searchable(),
                 TextColumn::make('email')->searchable(),
-                TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('roles.name')->label('Role')
-                    ->searchable()
-                    ->badge(),
                 TextColumn::make('created_at')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
@@ -96,7 +73,8 @@ class UserResource extends Resource
                         ->color('success'),
                     Tables\Actions\DeleteAction::make(),
                 ]),
-            ])->emptyStateActions([CreateAction::make()])
+            ])
+            ->emptyStateActions([CreateAction::make()])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -114,14 +92,9 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => Pages\ListCustomers::route('/'),
+            'create' => Pages\CreateCustomer::route('/create'),
+            'edit' => Pages\EditCustomer::route('/{record}/edit'),
         ];
-    }
-
-    public static function getGloballySearchableAttributes(): array
-    {
-        return ['name', 'email'];
     }
 }

@@ -20,10 +20,15 @@ class Checkout extends Component
     use LivewireAlert;
 
     public $first_name;
+
     public $last_name;
+
     public $phone;
+
     public $city;
+
     public $address;
+
     public $payment_method;
 
     public function mount()
@@ -59,7 +64,8 @@ class Checkout extends Component
         $order->items()->createMany($cart_items);
         CartManagement::clearCartItems();
         Mail::to(request()->user())->send(new OrderPlaced($order));
-        Alert::message('success', "Your order is proceeded.Please check your email", $this);
+        Alert::message('success', 'Your order is proceeded.Please check your email', $this);
+
         return redirect($redirect_url);
     }
 
@@ -78,13 +84,14 @@ class Checkout extends Component
                 'quantity' => $item['quantity'],
             ];
         }
+
         return $line_items;
     }
 
     protected function prepareOrderData($cart_items)
     {
         $order = new Order();
-        $order->user_id = auth()->user()->id;
+        $order->customer_id = auth()->user()->id;
         $order->grand_total = CartManagement::calculateGrandTotal($cart_items);
         $order->payment_method = $this->payment_method;
         $order->payment_status = 'pending';
@@ -92,7 +99,7 @@ class Checkout extends Component
         $order->currency = 'USD';
         $order->shipping_amount = 0;
         $order->shipping_method = 'none';
-        $order->notes = "Order placed by " . auth()->user()->name;
+        $order->notes = 'Order placed by '.auth()->user()->name;
 
         return $order;
     }
@@ -119,8 +126,8 @@ class Checkout extends Component
                 'customer_email' => auth()->user()->email,
                 'line_items' => $line_items,
                 'mode' => 'payment',
-                'success_url' => route('success') . '?session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => route('cancel')
+                'success_url' => route('success').'?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => route('cancel'),
             ]);
             $redirect_url = $sessionCheckout->url;
         } else {
@@ -134,6 +141,7 @@ class Checkout extends Component
     {
         $cart_items = CartManagement::getCartItemFormCookie();
         $grand_total = CartManagement::calculateGrandTotal($cart_items);
+
         return view('livewire.checkout', [
             'cart_items' => $cart_items,
             'grand_total' => $grand_total,

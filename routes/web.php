@@ -18,6 +18,8 @@ use App\Livewire\Review;
 use App\Livewire\ReviewCreate;
 use App\Livewire\ReviewEdit;
 use App\Livewire\Success;
+use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomePage::class);
@@ -50,4 +52,29 @@ Route::middleware('auth')->group(function () {
 
         return redirect()->to('/');
     });
+});
+
+Route::get('/test', function () {
+    // Fetch users with the 'Customer' role from the User model
+    $customerUsers = User::whereHas('roles', function ($query) {
+        $query->where('name', 'Customer');
+    })->get();
+
+    // Fetch all customers using the Customer model
+    $allCustomers = Customer::all();
+
+    // Fetch a specific user by ID and their roles
+    $user = User::find(4); // Fetch user with ID 4
+    $userRoles = $user ? $user->getRoleNames() : 'User not found.';
+
+    // Verify the roles assigned to all users
+    $allUsersWithRoles = User::with('roles')->get();
+
+    dd([
+        'customer_users' => $customerUsers,
+        'all_customers' => $allCustomers,
+        'specific_user' => $user,
+        'specific_user_roles' => $userRoles,
+        'all_users_with_roles' => $allUsersWithRoles,
+    ]);
 });

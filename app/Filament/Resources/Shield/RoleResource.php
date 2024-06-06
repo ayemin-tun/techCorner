@@ -51,8 +51,7 @@ class RoleResource extends Resource implements HasShieldPermissions
                                 Forms\Components\Hidden::make('guard_name')
                                     ->label(__('filament-shield::filament-shield.field.guard_name'))
                                     ->default(Utils::getFilamentAuthGuard())
-                                    ->nullable()
-                                    ->maxLength(255),
+                                    ->nullable(),
 
                                 ShieldSelectAllToggle::make('select_all')
                                     ->onIcon('heroicon-s-shield-check')

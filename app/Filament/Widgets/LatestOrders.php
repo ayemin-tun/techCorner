@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Filament\Resources\OrderResource;
 use App\Models\Order;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\TextColumn;
@@ -12,6 +13,8 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class LatestOrders extends BaseWidget
 {
+    use HasWidgetShield;
+
     protected int|string|array $columnSpan = 'full';
 
     protected static ?int $sort = 2;
@@ -26,7 +29,7 @@ class LatestOrders extends BaseWidget
                 TextColumn::make('id')
                     ->label('Order Id')
                     ->searchable(),
-                TextColumn::make('user.name')
+                TextColumn::make('userName')
                     ->searchable()
                     ->label('Customer'),
                 TextColumn::make('grand_total')

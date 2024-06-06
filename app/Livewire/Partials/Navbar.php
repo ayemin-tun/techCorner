@@ -10,17 +10,18 @@ class Navbar extends Component
 {
     public $total_count = 0;
 
-
     public function mount()
     {
         $this->total_count = count(CartManagement::getCartItemFormCookie());
     }
+
     #[On('update-cart-count')]
     public function updateCartCount($total_count)
     {
         $this->total_count = $total_count;
     }
 
+    #[On('update-login-username')]
     public function render()
     {
         return view('livewire.partials.navbar');

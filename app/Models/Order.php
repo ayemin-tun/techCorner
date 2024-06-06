@@ -26,7 +26,12 @@ class Order extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'customer_id');
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
     public function items(): HasMany
@@ -37,5 +42,18 @@ class Order extends Model
     public function address(): HasOne
     {
         return $this->hasOne(Address::class);
+    }
+
+    public function getUserNameAttribute()
+    {
+        if ($this->customer) {
+            return $this->customer->name;
+        }
+
+        if ($this->user) {
+            return $this->user->name;
+        }
+
+        return 'Unknown';
     }
 }

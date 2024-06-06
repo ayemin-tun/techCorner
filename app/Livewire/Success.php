@@ -24,7 +24,7 @@ class Success extends Component
 
     public function mount()
     {
-        $this->order = Order::with('address')->where('user_id', auth()->user()->id)->latest()->first();
+        $this->order = Order::with('address')->where('customer_id', auth()->user()->id)->latest()->first();
     }
 
     public function checkPaymentStatus()

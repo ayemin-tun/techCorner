@@ -4,15 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable
 {
     use HasFactory, HasRoles,Notifiable;
 
@@ -56,13 +54,15 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Order::class);
     }
 
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return $this->email == 'amtamt547@gmail.com';
-    }
-
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function scopeWithoutCustomerRoleandNoRole($query)
+    {
+        return $query->whereHas('roles', function ($subquery) {
+            $subquery->whereNotIn('name', ['Customer']);
+        });
     }
 }

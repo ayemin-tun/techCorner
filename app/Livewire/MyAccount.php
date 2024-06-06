@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Helpers\Alert;
+use App\Livewire\Partials\Navbar;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -48,13 +49,15 @@ class MyAccount extends Component
         $this->password = '';
         $this->password_confirmation = '';
         Alert::message('success', 'Profile Update Successfully', $this);
+        $this->dispatch('update-login-username')->to(Navbar::class);
+
     }
 
     public function render()
     {
         $auth_user = auth()->user();
-        $my_orders = Order::where('user_id', auth()->id())->latest()->paginate(5);
-        $total_orders = Order::where('user_id', auth()->user()->id)->get();
+        $my_orders = Order::where('customer_id', auth()->id())->latest()->paginate(5);
+        $total_orders = Order::where('customer_id', auth()->user()->id)->get();
         $processing_orders = $total_orders->where('status', 'processing');
         $delivered_orders = $total_orders->where('status', 'delivered');
         $cancelled_orders = $total_orders->where('status', 'cancelled');
